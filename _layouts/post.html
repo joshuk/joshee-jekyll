@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<title>Josh.ee - {{ page.title }}</title>
+		{% include head.html %}
+		<link rel="stylesheet" href="/assets/css/tpl/post.css"/>
+		<script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@15.1.1/dist/lazyload.min.js"></script>
+    </head>
+    <body class="default no-js">
+		{% include header.html %}
+
+		<main>
+			<section>
+                <div class="page-info">
+					<img src="{{ page.image_large }}" aria-hidden="true"/>
+					<div>
+						{% if page.type %}
+							<p class="category"><span>{{ page.type }}</span></p>
+						{% endif %}
+						<h1><span>{{ page.title }}</span></h1>
+					</div>
+                </div>
+				<article>
+					{{ content }}
+				</article>
+			</section>
+		</main>
+		
+		{% include footer.html %}
+		<script src="/assets/js/post.js"></script>
+    </body>
+</html>

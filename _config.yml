@@ -1,0 +1,27 @@
+# Site settings
+title: Josh.ee - Web Developer based in Manchester, UK
+email: hello@josh.ee
+description: > # this means to ignore newlines until "baseurl:"
+  Write an awesome description for your new site here. You can edit this
+  line in _config.yml. It will appear in your document head meta (for
+  Google search results) and in your feed.xml site description.
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "https://www.josh.ee" # the base hostname & protocol for your site
+twitter_username: jo_sh_ee
+instagram_username: jo.sh.ee
+github_username:  joshuk
+
+# Build settings
+markdown: kramdown
+permalink: /:title
+
+collections:
+  work:
+    permalink: /work/:path
+    output: true
+  blog:
+    permalink: /blog/:path
+    output: true
+
+plugins:
+  - jekyll-target-blank

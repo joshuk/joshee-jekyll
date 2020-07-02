@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ site.title }}</title>
+        {% include head.html %}
+        <link rel="stylesheet" href="/assets/css/tpl/home.css"/>
+    </head>
+    <body class="default">
+        {% include home/header.html %}
+
+        <main>
+            {% include home/about.html %}
+            {% include home/work.html %}
+            {% include home/other.html %}
+        </main>
+
+        {% include footer.html %}
+    </body>
+</html>

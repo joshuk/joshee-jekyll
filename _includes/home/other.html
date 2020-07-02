@@ -1,0 +1,19 @@
+<section id="other">
+    <h2><span>other stuff</span></h2>
+    <p>Here's some of the other stuff that I've been doing.</p>
+    <div class="other-articles">
+        {% assign sorted = (site.blog | sort: 'date') | reverse %}
+        {% for post in sorted limit 3 %}
+        <div class="other-item">
+            <div class="image">
+                <img src="{{ post.image_small }}" aria-hidden="true">
+            </div>
+            <div class="description">
+                <h3><span>{{ post.title }}</span></h3>
+                <p class="excerpt">{{ post.description }}</p>
+                <a href="{{ post.url | prepend: site.baseurl }}" class="read-more">read more</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>

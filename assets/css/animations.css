@@ -1,0 +1,20 @@
+html { scroll-behavior: smooth; }
+
+header nav a { opacity: 0.5; }
+header nav a:hover { opacity: 1; }
+
+.social .twitter:hover { fill: #1DA1F2; }
+.social .instagram:hover { fill: #E4405F; }
+
+.work-item:nth-of-type(2n-1) .image {transform: translateX(0.5rem);}
+.work-item:nth-of-type(2n) .image {transform: translateX(-0.5rem);}
+.work-item:nth-of-type(2n-1):hover .image {transform: translateX(0rem);}
+.work-item:nth-of-type(2n):hover .image {transform: translateX(0);}
+
+.work-item:nth-of-type(2n-1):hover .description {transform: translateX(-1rem);}
+.work-item:nth-of-type(2n):hover .description {transform: translateX(1rem);}
+
+.other-item .image { transform: translate(0.5rem, 0.5rem); }
+.other-item:hover .image { transform: translate(0, 0); }
+.other-item .description { transform: translate(-0.5rem, -0.5rem); }
+.other-item:hover .description { transform: translate(0, 0); }
