@@ -8,11 +8,11 @@ html, body { font-size: 16px; font-family: 'Raleway', 'Arial', sans-serif; backg
 :root { --max-page-width: 75rem; }
 
 body.light,
-body.default { --light-colour: #FFFFFF; --light-shadow: #E4E4E4; --main-colour: #FF47A3; --dark-colour: #1B264F; --dark-shadow: #10162D; }
-body.dark { --light-colour: #1B264F; --light-shadow: #10162d; --main-colour: #FF47A3; --dark-colour: #FBFBFB; --dark-shadow: #E4E4E4; }
+body.default { --light-colour: #FFFFFF; --light-shadow: #DADADA; --main-colour: #FF47A3; --dark-colour: #1B264F; --dark-shadow: #020510; }
+body.dark { --light-colour: #1B264F; --light-shadow: #020510; --main-colour: #FF47A3; --dark-colour: #D4D9E6; --dark-shadow: #B2BFE2; }
 
 @media (prefers-color-scheme: dark) {
-    body.default { --light-colour: #1B264F; --light-shadow: #10162d; --main-colour: #FF47A3; --dark-colour: #FBFBFB; --dark-shadow: #E4E4E4; }
+    body.default { --light-colour: #1B264F; --light-shadow: #020510; --main-colour: #FF47A3; --dark-colour: #D4D9E6; --dark-shadow: #B2BFE2; }
 }
 
 /* Header */
@@ -71,3 +71,7 @@ footer > div { max-width: 75rem; margin: 0 auto; padding: 2rem 1rem; }
 footer p:first-of-type { font-weight: 500; }
 
 footer .social { margin-bottom: 1.5rem; }
+
+@media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+}
