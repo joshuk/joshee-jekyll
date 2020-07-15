@@ -5,6 +5,8 @@ header nav button:hover { opacity: 1; }
 
 .social .twitter:hover { fill: #1DA1F2; }
 .social .instagram:hover { fill: #E4405F; }
+.social .github:hover { fill: var(--github-colour); }
+.social .codepen:hover { fill: var(--codepen-colour); }
 
 .work-item:nth-of-type(2n-1) .image {transform: translateX(0.5rem);}
 .work-item:nth-of-type(2n) .image {transform: translateX(-0.5rem);}
