@@ -78,7 +78,4 @@ footer .social { margin-bottom: 1.5rem; }
 
 @media (prefers-reduced-motion: no-preference) {
     html { scroll-behavior: smooth; }
-    html, body { transition: background 0.5s, color 0.5s; }
- 
-    .colour-scheme-switch svg { transition: fill 0.5s; }
 }
