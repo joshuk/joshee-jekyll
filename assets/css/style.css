@@ -9,10 +9,10 @@ html, body { height: 100%; font-size: 16px; font-family: 'Raleway', 'Arial', san
 
 body.light,
 body.default { --light-colour: #FFFFFF; --light-shadow: #DADADA; --main-colour: #FF47A3; --dark-colour: #1B264F; --dark-shadow: #020510; }
-body.dark { --light-colour: #1B264F; --light-shadow: #020510; --main-colour: #FF47A3; --dark-colour: #D4D9E6; --dark-shadow: #B2BFE2; }
+body.dark { --light-colour: #1B264F; --light-shadow: #3F4D7F; --main-colour: #FF47A3; --dark-colour: #D4D9E6; --dark-shadow: #B2BFE2; }
 
 @media (prefers-color-scheme: dark) {
-    body.default { --light-colour: #1B264F; --light-shadow: #020510; --main-colour: #FF47A3; --dark-colour: #D4D9E6; --dark-shadow: #B2BFE2; }
+    body.default { --light-colour: #1B264F; --light-shadow: #3F4D7F; --main-colour: #FF47A3; --dark-colour: #D4D9E6; --dark-shadow: #B2BFE2; }
 }
 
 /* Header */
