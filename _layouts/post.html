@@ -7,6 +7,9 @@
 		<script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@15.1.1/dist/lazyload.min.js"></script>
     </head>
     <body class="default no-js">
+		<script>
+		document.querySelector("body").classList.remove("no-js");const cookies=decodeURIComponent(document.cookie),index=cookies.indexOf("darkMode");-1!==index&&(document.querySelector("body").classList.remove("default"),document.querySelector("body").classList.add(["light","dark"][cookies.substr(index+9,1)]));
+		</script>
 		{% include header.html %}
 
 		<main>
