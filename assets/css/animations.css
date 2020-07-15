@@ -1,11 +1,7 @@
-html, body { transition: background 0.5s, color 0.5s; }
-
 header nav a,
 header nav button { opacity: 0.5; }
 header nav a:hover,
 header nav button:hover { opacity: 1; }
-
-.colour-scheme-switch svg { transition: fill 0.5s; }
 
 .social .twitter:hover { fill: #1DA1F2; }
 .social .instagram:hover { fill: #E4405F; }
