@@ -23,3 +23,5 @@ fields:
 - type: file
   name: image_large
   label: image_large
+pages:
+- _work/josh.ee.md
