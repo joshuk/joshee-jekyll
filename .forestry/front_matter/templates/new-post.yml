@@ -1,0 +1,25 @@
+---
+label: New Post
+hide_body: false
+fields:
+- type: text
+  name: layout
+  label: layout
+- type: text
+  name: type
+  label: type
+- type: text
+  name: title
+  label: title
+- type: text
+  name: date
+  label: date
+- type: text
+  name: description
+  label: description
+- type: file
+  name: image_small
+  label: image_small
+- type: file
+  name: image_large
+  label: image_large
