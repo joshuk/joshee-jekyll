@@ -24,8 +24,12 @@ article h1 span { padding: 1rem; }
 article h2 span { padding: 1rem; }
 article h3 span { padding: 0.75rem; }
 
-article p + h3 { margin-top: 3rem; }
-article p + h4 { margin-top: 2rem; }
+article p + h3,
+article ul + h3,
+article ol + h3 { margin-top: 3rem; }
+article p + h4,
+article ul + h4,
+article ol + h4 { margin-top: 2rem; }
 
 article video { margin: 1rem 0 2rem; }
 
