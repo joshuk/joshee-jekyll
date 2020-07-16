@@ -7,7 +7,16 @@
     </head>
     <body class="default no-js">
         <script>
-        document.querySelector("body").classList.remove("no-js");const cookies=decodeURIComponent(document.cookie),index=cookies.indexOf("darkMode");-1!==index&&(document.querySelector("body").classList.remove("default"),document.querySelector("body").classList.add(["light","dark"][cookies.substr(index+9,1)]));
+        document.querySelector('body').classList.remove('no-js');
+        const cookies = decodeURIComponent(document.cookie);
+        const index = cookies.indexOf('darkMode');
+        
+        if(index !== -1){
+            document.querySelector('body').classList.remove('default');
+            document.querySelector('body').classList.add(['light', 'dark'][cookies.substr(index+9, 1)]);
+        }else if(window.matchMedia('(prefers-color-scheme:dark)')){
+            document.querySelector('body').classList.add('dark');
+        }
         </script>
         {% include home/header.html %}
 
