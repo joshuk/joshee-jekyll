@@ -55,4 +55,12 @@ Finally, I noticed that pure white text on a dark background can be somewhat jar
 
 <h3><span>the build</span></h3>
 
-I knew from the start that I wanted this site to be simple.
+Something that I wanted to mirror from the design to the build of this site was minimalism.
+
+A common theme I saw while lurking around web development communities online was people using Javascript libraries like [React](https://reactjs.org/) or [Vue](https://vuejs.org/) to create their portfolio websites. While this certainly works, I can't help but feel they're massively over-engineering it.
+
+Instead, I chose to go in the complete opposite direction and use no Javascript and CSS libraries (which, to be fair, wasn't a huge undertaking due to how I planned for the site to look).
+
+Another decision I made was to completely throw out compatibility with older browsers, namely Internet Explorer. 
+
+This meant that I could use features such as CSS Variables without needing to use preprocessors or polyfills. This not only made fiddling with the colours of the site 1000 times easier, but made adding a dark mode option for the site a piece of cake.
