@@ -61,6 +61,38 @@ A common theme I saw while lurking around web development communities online was
 
 Instead, I chose to go in the complete opposite direction and use no Javascript and CSS libraries (which, to be fair, wasn't a huge undertaking due to how I planned for the site to look).
 
-Another decision I made was to completely throw out compatibility with older browsers, namely Internet Explorer. 
+Another decision I made was to completely throw out compatibility with older browsers, namely Internet Explorer.
 
-This meant that I could use features such as CSS Variables without needing to use preprocessors or polyfills. This not only made fiddling with the colours of the site 1000 times easier, but made adding a dark mode option for the site a piece of cake.
+This meant that I could use features such as CSS Variables without needing to use preprocessors or polyfills. This not only made fiddling with the colours of the site a thousand times easier, but made adding a dark mode option for the site a piece of cake.
+
+<figure><img src="/assets/img/light_dark_home.png" alt="An image showing the header of the homepage of Josh.ee, with the light theme on the left and the dark theme on the right."/><figcaption>Josh.ee in both light and dark mode</figcaption></figure>
+
+<h3><span>dark mode</span></h3>
+
+As I'm sure you can glean from how I won't stop talking about it, I'm fairly happy with how the dark mode of the site works.
+
+Plus, since it's the only real bit of functionality on the site, I'd like to go through how it works a bit.
+
+To start off, I define the colour schemes in CSS using variables, which are as follows:
+
+_--light-colour_, _--light-shadow_, _--main-colour_, _--dark-colour_, _--dark-shadow_ and a few others for social links.
+
+These names were defined with the light scheme in mind, as that's what I built the website in first. This meant that _--light-colour_ would be _#FFFFFF_, _--light-shadow_ would be _#DADADA_ and so on.
+
+To add the dark mode colour scheme, I essentially just swap around all the variables but the main colour. So _--light-colour_ would switch from being the brightest colour, to the darkest etc.
+
+This makes for some kinda funky reading if you look in Inspect Element, however works pretty well in practice.
+
+<figure><img src="/assets/img/inspect_element_colours.png" alt="An image showing the dark theme of the site in inspect element, with each variable being set to it's opposite colour."/><figcaption>Makes sense</figcaption></figure>
+
+Next up was switching between them.
+
+<h4>Without Javascript</h4>
+
+Originally I implemented this only using CSS.
+
+The body has the class _default_ applied to it, which is originally set to the light scheme. However, it switches to the dark theme if the media query _(prefers-color-scheme: dark)_ is met.
+
+This isn't the best as it means the user has to change the settings of their browser (or entire system) to switch colour schemes, which is a bit of a ball-ache. However, considering it takes up around 3 lines of CSS, it's not worth the time or effort to remove.
+
+<h4>With Javascript</h4>
