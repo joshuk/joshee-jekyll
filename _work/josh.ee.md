@@ -96,3 +96,20 @@ The body has the class _default_ applied to it, which is originally set to the l
 This isn't the best as it means the user has to change the settings of their browser (or entire system) to switch colour schemes, which is a bit of a ball-ache. However, considering it takes up around 3 lines of CSS, it's not worth the time or effort to remove.
 
 <h4>With Javascript</h4>
+
+Using Javascript allowed me to make a switch that would let the user choose which colour scheme they wanted to use, which is undoubtedly the better option.
+
+The general idea behind this switch is extremely simple:
+
+1. User presses the switch
+2. The site checks which colour scheme it's currently using
+3. The site switches to the opposite colour scheme
+4. The site saves the colour scheme preference in the cookies
+
+In practice, however, getting that working properly can be difficult.
+
+The main issue I ran into is that due to the way the site is hosted, I don't have access to anything like PHP which I could use to set the correct class on the body before the page is loaded.
+
+This meant that I had to use Javascript, which if done improperly will cause a sudden flash on every page load. This is because the site would be rendered initially using the light scheme until the Javascript kicks in and switches it to the dark one.
+
+However, due to the way that browsers render pages, placing some inline JS directly after the opening body tag will cause this not to happen.
