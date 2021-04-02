@@ -6,7 +6,7 @@
         {% for post in sorted limit 3 %}
         <div class="other-item">
             <div class="image">
-                <img src="{{ post.image_small }}">
+                <img src="{{ post.image_small }}" aria-hidden="true">
             </div>
             <div class="description">
                 <h3><span>{{ post.title }}</span></h3>
