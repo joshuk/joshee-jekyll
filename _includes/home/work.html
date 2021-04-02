@@ -5,13 +5,13 @@
     {% for post in sorted %}
         <div class="work-item">
             <div class="image">
-                <img src="{{ post.image_small }}" aria-hidden="true">
+                <img src="{{ post.image_small }}">
             </div>
             <div class="description">
                 <div>
                     <h3><span>{{ post.title }}</span></h3>
                     <p class="excerpt">{{ post.description }}</p>
-                    <a href="{{ post.url | prepend: site.baseurl }}" class="read-more">read more</a>
+                    <a href="{{ post.url | prepend: site.baseurl }}" class="read-more" title="Read more about {{ post.title }}">read more</a>
                 </div>
             </div>
         </div>
