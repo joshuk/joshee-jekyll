@@ -10,9 +10,9 @@ image_large: ''
 published: false
 
 ---
-My portfolio website was created in June 2020, and was designed to house both my work as a developer as well as any other little things that I wanted to show off or talk about.
+I created my portfolio website around June 2020 to house both my work as a developer as well as any other little things that I wanted to show off or talk about.
 
-It's built as a [Jekyll](https://jekyllrb.com/) site using vanilla CSS and Javascript. It's hosted with [Netlify](https://www.netlify.com/), and uses [Forestry](https://forestry.io/) for content population.
+It's built as a static [Jekyll](https://jekyllrb.com/) site and is hosted on [Netlify](https://www.netlify.com/), using [Forestry](https://forestry.io/) for content population.
 
 <h3><span>the design</span></h3>
 
@@ -24,22 +24,26 @@ I had a few main things in mind when I thought about how I wanted this site to l
 
 <h4>Minimality</h4>
 
-The idea behind it being minimal is mainly due to what the site is for, which is showing off my work. I _could_ make the website all-singing, all-dancing but I feel like it would just distract from that point.
+My main motivation behind making the site minimal was that it was going to be holding text and not much else, so I didn't want to take much focus off of that with fancy layouts or flashy animations.
 
-Another benefit of minimalism is that it makes it really easy to make tight. I like to think that this site is built pretty well and looks good on most devices, which I feel mostly owes to it being simple.
+Another benefit of minimalism is that it makes it really easy to make tight. I like to think that this site is built pretty well and looks good on most devices and screen sizes, which was made much easier by not having a million moving parts.
 
 <h4>Colours</h4>
 
-The colour scheme was hugely inspired by a website I worked on while at work (which never ended up seeing the light of day). The original colour scheme I picked used two light colours, a main colour (pink), and two dark colours.
+The colour scheme was largely inspired by a website I worked on at a previous job (which never ended up seeing the light of day, so it's mine for the taking 😊).
+
+The original colour scheme I chose used two light colours, a main colour (pink), and two dark colours.
 
 <figure>  
 <img src="/assets/img/colours_original.png" alt="An image showing the original colour scheme of Josh.ee"/>  
 <figcaption>The original colour scheme of Josh.ee</figcaption>  
 </figure>
 
-The idea behind this being that from that colour scheme I could pick out the colours for the default light theme, as well as a dark mode version. However, that didn't quite end up working as well as I thought, so I instead opted to go for two separate colour schemes for both light and dark.
+My original plan was to pick out the colours for both the default light theme and a dark theme from that palette. However, that idea ended up being a bit naff in practice, so I instead opted for two slightly different colour schemes for both light and dark.
 
 <figure><img src="/assets/img/colours_comp.png" alt="An image showing the two current of Josh.ee"/><figcaption>The (current) light and dark colour schemes of Josh.ee</figcaption></figure>
+
+This ended up working a lot better.
 
 <h4>Typography</h4>
 
@@ -49,15 +53,21 @@ I started with finding a clean, readable font that I liked the look of (and was 
 
 In order to make my longer articles of text easier to read, I decided to use a rather large font size, increase the line-height to stop everything being squished together, and limit the width of the actual article so that it didn't span the whole page.
 
-In addition, while writing I would use line breaks and paragraphs liberally, mainly to try and prevent huge walls of text that can be hard to digest.
-
-Finally, I noticed that pure white text on a dark background can be somewhat jarring and hard to look at for long periods of time. After reading [this article](https://css-tricks.com/a-complete-guide-to-dark-mode-on-the-web/) on CSS-Tricks, I changed the text's colour to be a pale shade of blue, which I believe helps lessen this effect.
+In addition, while writing I would use line breaks and paragraphs fairly liberally, mainly to try and prevent huge walls of text that are impossible to read.
 
 <h3><span>the build</span></h3>
 
-Something that I wanted to mirror from the design to the build of this site was minimalism.
+When I was first thinking about how to build this site I considered a few different options. 
 
-A common theme I saw while lurking around web development communities online was people using Javascript libraries like [React](https://reactjs.org/) or [Vue](https://vuejs.org/) to create their portfolio websites. While this certainly works, I can't help but feel they're massively over-engineering it.
+Originally I was going to build it as a regular PHP site using a CMS like [Wordpress](https://wordpress.com/) or [CraftCMS](https://craftcms.com/), since I had a fair bit of experience building these kinds of things before.
+
+However, not only would this mean I'd have to set up back end hosting which I couldn't be bothered doing, but I kinda wanted to try something new. So I canned that idea.
+
+Next up I considered trying to use one of those fancy JS libraries like [React](https://reactjs.org/) or [Vue](https://vuejs.org/), since I'd never really touched one previously and they were all the rage.
+
+Though after a bit of research I realised that I'd not only have to set up a back end for these libraries to query, but _then_ actually write an API handler to get the information and display it. This sounded like entirely too much work.
+
+Not only that, but I'd recently developed a strange obsession with making my sites as lightweight as possible. Importing a [20-40kb](https://gist.github.com/Restuta/cda69e50a853aa64912d) JS library (and subsequently forcing people to have JS turned on) for a site that had nearly no interaction or moving parts didn't really make sense in this regard. Maybe next time.
 
 Instead, I chose to go in the complete opposite direction and use no Javascript and CSS libraries (which, to be fair, wasn't a huge undertaking due to how I planned for the site to look).
 
