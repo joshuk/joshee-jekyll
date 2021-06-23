@@ -51,13 +51,13 @@ Since the main purpose of this site is to house text, I knew that I had to try t
 
 I started with finding a clean, readable font that I liked the look of (and was free, of course). This ended up being [Raleway](https://fonts.google.com/specimen/Raleway).
 
-In order to make my longer articles of text easier to read, I decided to use a rather large font size, increase the line-height to stop everything being squished together, and limit the width of the actual article so that it didn't span the whole page.
+In order to make my longer articles of text easier to read, I decided to use a kinda large font size, increase the line-height to stop everything being squished together, and limit the width of the actual article so that it didn't span the whole page.
 
 In addition, while writing I would use line breaks and paragraphs fairly liberally, mainly to try and prevent huge walls of text that are impossible to read.
 
 <h3><span>the build</span></h3>
 
-When I was first thinking about how to build this site I considered a few different options. 
+When I was first thinking about how to build this site I considered a few different options.
 
 Originally I was going to build it as a regular PHP site using a CMS like [Wordpress](https://wordpress.com/) or [CraftCMS](https://craftcms.com/), since I had a fair bit of experience building these kinds of things before.
 
@@ -68,6 +68,10 @@ Next up I considered trying to use one of those fancy JS libraries like [React](
 Though after a bit of research I realised that I'd not only have to set up a back end for these libraries to query, but _then_ actually write an API handler to get the information and display it. This sounded like entirely too much work.
 
 Not only that, but I'd recently developed a strange obsession with making my sites as lightweight as possible. Importing a [20-40kb](https://gist.github.com/Restuta/cda69e50a853aa64912d) JS library (and subsequently forcing people to have JS turned on) for a site that had nearly no interaction or moving parts didn't really make sense in this regard. Maybe next time.
+
+I finally landed on using a static site generator, since it didn't require me to set up a back end and spat out regular HTML files (which meant I could also host it for free 🤑). I forget how exactly I stumbled on static site generators, most likely through a post/comment on the [webdev subreddit](). I also don't remember why I chose to use [Jekyll](https://jekyllrb.com/) over others, not that it really matters in this case.
+
+<h4>Actually building it</h4>
 
 Instead, I chose to go in the complete opposite direction and use no Javascript and CSS libraries (which, to be fair, wasn't a huge undertaking due to how I planned for the site to look).
 
