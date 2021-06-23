@@ -67,63 +67,64 @@ Next up I considered trying to use one of those fancy JS libraries like [React](
 
 Though after a bit of research I realised that I'd not only have to set up a back end for these libraries to query, but _then_ actually write an API handler to get the information and display it. This sounded like entirely too much work.
 
-Not only that, but I'd recently developed a strange obsession with making my sites as lightweight as possible. Importing a [20-40kb](https://gist.github.com/Restuta/cda69e50a853aa64912d) JS library (and subsequently forcing people to have JS turned on) for a site that had nearly no interaction or moving parts didn't really make sense in this regard. Maybe next time.
+Not only that, but I'd recently developed a strange obsession with making my sites as lightweight as possible. Importing a [20-40kb](https://gist.github.com/Restuta/cda69e50a853aa64912d) JS library (and subsequently forcing people to have JS turned on) for a site that had nearly no interaction or moving parts didn't really make sense for this. Maybe next time.
 
-I finally landed on using a static site generator, since it didn't require me to set up a back end and spat out regular HTML files (which meant I could also host it for free 🤑). I forget how exactly I stumbled on static site generators, most likely through a post/comment on the [webdev subreddit](). I also don't remember why I chose to use [Jekyll](https://jekyllrb.com/) over others, not that it really matters in this case.
+I finally landed on using a static site generator, since it didn't require me to set up a back end and spat out plain ol' HTML files (which meant I could also host it for free 🤑). I forget how exactly I stumbled on static site generators, most likely through a post/comment on the [webdev subreddit](https://old.reddit.com/r/webdev/). I also don't remember why I chose to use [Jekyll](https://jekyllrb.com/) over others, not that it really matters in this case. 
+
+_(Note to self: maybe don't wait a year before writing about what you made next time)_
 
 <h4>Actually building it</h4>
 
-Instead, I chose to go in the complete opposite direction and use no Javascript and CSS libraries (which, to be fair, wasn't a huge undertaking due to how I planned for the site to look).
+Since this site is so basic in terms of it's content, I could really focus in on trying to make the site as fast and lightweight as possible as well as supporting a few settings I perhaps wouldn't bother with normally.
 
-Another decision I made was to completely throw out compatibility with older browsers, namely Internet Explorer.
+A few examples of this would be:
 
-This meant that I could use features such as CSS Variables without needing to use preprocessors or polyfills. This not only made fiddling with the colours of the site a thousand times easier, but made adding a dark mode option for the site a piece of cake.
+* Lazy-loading all of the videos on the site, whilst also including a regular version in a &lt;noscript&gt; tag for users with JS turned off.
+* Using a media property when importing certain styles to only load animations for users on a device with a mouse cursor and _prefers-reduced-motion_ set to _no-preference_
+* Automatically switching the site to dark mode for users with _prefers-color-scheme_ set to _dark_ (I'll go into this a bit more in a sec)
+
+As well as this, thanks to some handy minification and compression, the initial load of the site's homepage doesn't go too far over 200kb. Meaning that regardless of whichever shack in the outer reaches of Mongolia you may find yourself in, you'll (hopefully) still be able to load the site.
+
+At the time of building this site I had been developing sites for the NHS for a few years. This meant I had plenty of experience with developing for everyone's pal Internet Explorer, since apparently it's the browser of choice for many in that organisation.
+
+I don't particularly like Internet Explorer, and so decided to employ some wishful thinking and essentially forget it existed when building this site.
+
+The main place that this came in handy was with implementing the aforementioned colour schemes into the site. Due to not having to worry about compatibility, I could use [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) for all of the colours on the site. This made implementing a dark mode a walk in the park.
 
 <figure><img src="/assets/img/light_dark_home.png" alt="An image showing the header of the homepage of Josh.ee, with the light theme on the left and the dark theme on the right."/><figcaption>Josh.ee in both light and dark mode</figcaption></figure>
 
+Speaking of which...
+
 <h3><span>dark mode</span></h3>
 
-As I'm sure you can glean from how I won't stop talking about it, I'm fairly happy with how the dark mode of the site works.
+Since it's pretty much the only moving part this site it'd probably be worth talking about how this works.
 
-Plus, since it's the only real bit of functionality on the site, I'd like to go through how it works a bit.
+Like I mentioned before, I start by defining a couple of CSS variables which will hold the site's colours. Namely they are:
 
-To start off, I define the colour schemes in CSS using variables, which are as follows:
+_--light-colour_, _--light-shadow_, _--main-colour_, _--dark-colour_, _--dark-shadow_ along with a few others for social links.
 
-_--light-colour_, _--light-shadow_, _--main-colour_, _--dark-colour_, _--dark-shadow_ and a few others for social links.
+These names were defined with the light scheme in mind, as that was the colour scheme I initially built the site in. This meant that _--light-colour_ would be _#FFFFFF_, _--light-shadow_ would be _#DADADA_ and so on.
 
-These names were defined with the light scheme in mind, as that's what I built the website in first. This meant that _--light-colour_ would be _#FFFFFF_, _--light-shadow_ would be _#DADADA_ and so on.
+To switch the site to the dark scheme, I can then just swap around all the variables but the main colour. So _--light-colour_ would switch from being the lightest colour, to the darkest etc.
 
-To add the dark mode colour scheme, I essentially just swap around all the variables but the main colour. So _--light-colour_ would switch from being the brightest colour, to the darkest etc.
-
-This makes for some kinda funky reading if you look in Inspect Element, however works pretty well in practice.
+This makes for some kinda funky reading if you look at Inspect Element while in dark mode, however it works well enough that I don't really care.
 
 <figure><img src="/assets/img/inspect_element_colours.png" alt="An image showing the dark theme of the site in inspect element, with each variable being set to it's opposite colour."/><figcaption>Makes sense</figcaption></figure>
 
-Next up was switching between them.
+Next was actually allowing the user to switch between the modes.
 
 <h4>Without Javascript</h4>
 
-Originally I implemented this only using CSS.
+When you load the site the &lt;body&gt; has the class _default_ applied to it. This class defines all the aforementioned variables as the light scheme at first, however this is overwritten with the dark scheme's colours if the _prefers-color-scheme_ media query is set to _dark_.
 
-The body has the class _default_ applied to it, which is originally set to the light scheme. However, it switches to the dark theme if the media query _(prefers-color-scheme: dark)_ is met.
-
-This isn't the best as it means the user has to change the settings of their browser (or entire system) to switch colour schemes, which is a bit of a ball-ache. However, considering it takes up around 3 lines of CSS, it's not worth the time or effort to remove.
+This works pretty great in terms of it keeping the colour scheme that the user has set on their system, but makes it impossible (or at least a massive ball ache) to switch from one scheme to another.
 
 <h4>With Javascript</h4>
 
-Using Javascript allowed me to make a switch that would let the user choose which colour scheme they wanted to use, which is undoubtedly the better option.
+To try and fix this problem, I could make a quick little Javascript switch that would swap the current colour scheme and save it in the user's cookies.
 
-The general idea behind this switch is extremely simple:
+The main issue I faced when it came to this was setting the correct colour scheme when the user loaded a new page.
 
-1. User presses the switch
-2. The site checks which colour scheme it's currently using
-3. The site switches to the opposite colour scheme
-4. The site saves the colour scheme preference in the cookies
+Since the site has no back end, I couldn't just add the correct class to the body there and have it render to the user's browser fine.
 
-In practice, however, getting that working properly can be difficult.
-
-The main issue I ran into is that due to the way the site is hosted, I don't have access to anything like PHP which I could use to set the correct class on the body before the page is loaded.
-
-This meant that I had to use Javascript, which if done improperly will cause a sudden flash on every page load. This is because the site would be rendered initially using the light scheme until the Javascript kicks in and switches it to the dark one.
-
-However, due to the way that browsers render pages, placing some inline JS directly after the opening body tag will cause this not to happen.
+Similarly, trying to add this logic in an external &lt;script&gt; tag would mean the class would be added _after_ the page load, which could cause a pretty ugly flash in some circumstances. I don't want to cause any seizures, so I needed to find a fix for this.
