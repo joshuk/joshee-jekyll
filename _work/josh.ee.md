@@ -69,7 +69,7 @@ Though after a bit of research I realised that I'd not only have to set up a bac
 
 Not only that, but I'd recently developed a strange obsession with making my sites as lightweight as possible. Importing a [20-40kb](https://gist.github.com/Restuta/cda69e50a853aa64912d) JS library (and subsequently forcing people to have JS turned on) for a site that had nearly no interaction or moving parts didn't really make sense for this. Maybe next time.
 
-I finally landed on using a static site generator, since it didn't require me to set up a back end and spat out plain ol' HTML files (which meant I could also host it for free 🤑). I forget how exactly I stumbled on static site generators, most likely through a post/comment on the [webdev subreddit](https://old.reddit.com/r/webdev/). I also don't remember why I chose to use [Jekyll](https://jekyllrb.com/) over others, not that it really matters in this case. 
+I finally landed on using a static site generator, since it didn't require me to set up a back end and spat out plain ol' HTML files (which meant I could also host it for free 🤑). I forget how exactly I stumbled on static site generators, most likely through a post/comment on the [webdev subreddit](https://old.reddit.com/r/webdev/). I also don't remember why I chose to use [Jekyll](https://jekyllrb.com/) over others, not that it really matters in this case.
 
 _(Note to self: maybe don't wait a year before writing about what you made next time)_
 
@@ -79,7 +79,7 @@ Since this site is so basic in terms of it's content, I could really focus in on
 
 A few examples of this would be:
 
-* Lazy-loading all of the videos on the site, whilst also including a regular version in a &lt;noscript&gt; tag for users with JS turned off.
+* Lazy-loading all of the videos on the site, whilst also including a regular version in a <noscript> tag for users with JS turned off.
 * Using a media property when importing certain styles to only load animations for users on a device with a mouse cursor and _prefers-reduced-motion_ set to _no-preference_
 * Automatically switching the site to dark mode for users with _prefers-color-scheme_ set to _dark_ (I'll go into this a bit more in a sec)
 
@@ -115,7 +115,7 @@ Next was actually allowing the user to switch between the modes.
 
 <h4>Without Javascript</h4>
 
-When you load the site the &lt;body&gt; has the class _default_ applied to it. This class defines all the aforementioned variables as the light scheme at first, however this is overwritten with the dark scheme's colours if the _prefers-color-scheme_ media query is set to _dark_.
+When you load the site the <body> has the class _default_ applied to it. This class defines all the aforementioned variables as the light scheme at first, however this is overwritten with the dark scheme's colours if the _prefers-color-scheme_ media query is set to _dark_.
 
 This works pretty great in terms of it keeping the colour scheme that the user has set on their system, but makes it impossible (or at least a massive ball ache) to switch from one scheme to another.
 
@@ -127,4 +127,6 @@ The main issue I faced when it came to this was setting the correct colour schem
 
 Since the site has no back end, I couldn't just add the correct class to the body there and have it render to the user's browser fine.
 
-Similarly, trying to add this logic in an external &lt;script&gt; tag would mean the class would be added _after_ the page load, which could cause a pretty ugly flash in some circumstances. I don't want to cause any seizures, so I needed to find a fix for this.
+Similarly, trying to add this logic in an external <script> tag would mean the class would be added _after_ the page load, which could cause a pretty ugly flash in some circumstances. I don't want to cause any seizures, so I needed to find a fix for this.
+
+Luckily, there is a pretty simple solution for this. By placing some inline JS directly after the body tag the rendering of the page is blocked until it has finished executing. This allows me to add a class to the body before any of the page is actually rendered on the browser, meaning the flash is gone.
