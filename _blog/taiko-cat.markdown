@@ -11,11 +11,7 @@ Taiko Cat is a dumb little web app I made over the course of a weekend in Septem
 
 <h3><span>who with what?</span></h3>
 
-Bongo Cat was a dumb little internet meme stemmed from a series of tweets that went viral. Over the next couple of months this idea was picked up and used by [many different content creators](https://www.youtube.com/results?search_query=bongo+cat) resulting in millions of views.
-
-<div class="tweet">
-    <blockquote class="twitter-tweet"><p lang="und" dir="ltr"> <a href="https://t.co/2LZlM2FYXm">pic.twitter.com/2LZlM2FYXm</a></p>&mdash; DitzyFlama (@DitzyFlama) <a href="https://twitter.com/DitzyFlama/status/993487015499853824?ref_src=twsrc%5Etfw">May 7, 2018</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-</div>
+Bongo Cat was a dumb little internet meme stemmed from [a series of tweets](https://twitter.com/DitzyFlama/status/993487015499853824) that went viral. Over the next couple of months this idea was picked up and used by [many different content creators](https://www.youtube.com/results?search_query=bongo+cat) resulting in millions of views.
 
 One such place where it was picked up was within the osu! community, where someone went as far as [to build a pseudo-webcam featuring Bongo Cat](https://www.reddit.com/r/osugame/comments/9gah62/i_made_a_bongo_cat_cam_for_osu_that_works_in_real/) (which admittedly inspired me to create this). Speaking of which...
 
@@ -70,7 +66,23 @@ And to make it *even* sweeter, all I need from the map's hit objects is the time
 
 So, without further ado, let's get into some code! *(Warning: Spaghetti ahead!)*
 
-<script src="https://gist.github.com/joshuk/0359b14dcdbca6b23eed8881a5fa0013.js"></script>
+{% highlight javascript %}
+zip.forEach(function (p, f) {
+  if(f.name.indexOf('.osu') != -1){
+    f.async("string").then(function(c){
+      if(c.indexOf('Mode: 1') != -1){
+        hitObjects = c.split('[HitObjects]')[1].trim();
+
+        artistName = (c.indexOf('ArtistUnicode:') != -1 ? /ArtistUnicode:(.+)/.exec(c)[1].trim() : /Artist:(.+)/.exec(c)[1].trim());
+        songName = (c.indexOf('TitleUnicode:') != -1 ? /TitleUnicode:(.+)/.exec(c)[1].trim() : /Title:(.+)/.exec(c)[1].trim());
+        difficultyName = /Version:(.+)/.exec(c)[1].trim();
+        beatmapID = (c.indexOf('BeatmapID') != -1 ? /BeatmapID:(.+)/.exec(c)[1] : btoa(difficultyName));
+
+        availableMaps[beatmapID] = {name: difficultyName, lead: /AudioLeadIn: (.+)/.exec(c)[1].trim(), objects: hitObjects};
+      }
+    });
+  }
+{% endhighlight %}
 
 What this script basically does is:
 
@@ -84,15 +96,21 @@ What this script basically does is:
 
 If you're still somewhat confused, here's a run down of the most important parts:
 
-```hitObjects = c.split('[HitObjects]')[1].trim();```
+{% highlight javascript %}
+hitObjects = c.split('[HitObjects]')[1].trim();
+{% endhighlight %}
 
 Since the hit objects of a difficulty are the last things in the file, to get them all I can just split the file at the *[HitObjects]* header and grab everything after it.
 
-```artistName = (c.indexOf('ArtistUnicode:') != -1 ? /ArtistUnicode:(.+)/.exec(c)[1].trim() : /Artist:(.+)/.exec(c)[1].trim());```
+{% highlight javascript %}
+artistName = (c.indexOf('ArtistUnicode:') != -1 ? /ArtistUnicode:(.+)/.exec(c)[1].trim() : /Artist:(.+)/.exec(c)[1].trim());
+{% endhighlight %}
 
 osu! has two ways of storing both the artist name and song title, regular and Unicode. Unicode is used when the artist name or song title doesn't use the English character set (such as Japanese or Russian). This piece of code checks whether the Unicode artist name exists, and falls back to the regular romanized version if it doesn't.
 
-```beatmapID = (c.indexOf('BeatmapID') != -1 ? /BeatmapID:(.+)/.exec(c)[1] : btoa(difficultyName));```
+{% highlight javascript %}
+beatmapID = (c.indexOf('BeatmapID') != -1 ? /BeatmapID:(.+)/.exec(c)[1] : btoa(difficultyName));
+{% endhighlight %}
 
 When storing information about each individual difficulty I would use the unique Beatmap ID that was present in the file. However, from my extremely limited testing I found that some beatmaps don't contain this ID. In the case that it doesn't, it uses the difficulty name encoded using Base64 instead.
 
@@ -102,7 +120,44 @@ Now we've got all that out the way, the next thing to do is to properly parse th
 
 Once the user selects the difficulty they'd like Taiko Cat to play, the following code runs:
 
-<script src="https://gist.github.com/joshuk/e3d3f09c1d42d863cd2ea8f6c1331eec.js"></script>
+{% highlight javascript %}
+difficultyInfo = availableMaps[e.target.dataset.mapId];
+difficultiesList = null;
+
+leadIn = (difficultyInfo['lead'] > 2000 ? difficultyInfo['lead'] : 2000);
+hitObjectsSplit = difficultyInfo['objects'].split("\n");
+
+hitObjectsSplit.forEach(function(i){
+  splitI = i.trim().split(',');
+  colour = '';
+
+  //1 = red, 2 = red-hard, 3 = blue, 4 = blue-hard
+  switch(splitI[4]){
+    case '0':
+      colour = '1';
+    break;
+    case '2':
+      colour = '3';
+    break;
+    case '4':
+      colour = '2';
+    break;
+    case '6':
+      colour = '4';
+    break;
+    case '8':
+      colour = '3';
+    break;
+    case '12': 
+      colour = '4';
+    break;
+  }
+    
+  mapItems.push([parseInt(splitI[2])+parseInt(leadIn), splitI[3], colour]);
+});
+
+frame = window.requestAnimationFrame(draw);
+{% endhighlight %}
 
 To sum this up, it determines the lead-in time for the song (which is a minimum of 2000ms), then remaps the osu! hitsounds into the 4 main ones used by Taiko Cat (which we'll get into later). Finally, it pushes each hitobject into an array which will be read in in the draw function, which it then calls.
 
@@ -148,7 +203,23 @@ Finally, now that we have all of the elements set up, the last thing to do is to
 
 There's not a whole lot to talk about here outside of the code its self, so let's just jump right into it. If you thought the code before was messy, get ready for this.
 
-<script src="https://gist.github.com/joshuk/b9f0316e2102504a1daca06f5b9e5135.js"></script>
+{% highlight javascript %}
+function draw(cT){
+  if(loadDone == true){
+    if(loading.classList.contains('active')){
+      loading.classList.remove('active');
+    }
+
+    if(!startTime){
+      startTime = Date.now();
+    }else{
+      timer = Math.ceil(Date.now() - startTime);
+    }
+
+    if(latestNote == false){
+      latestNote = mapItems[0];
+    }
+{% endhighlight %}
 
 The start of the draw function mainly just defines and checks a few things. It begins by checking whether or not everything has finished loading, removing the loading icon if it has.
 
@@ -160,7 +231,62 @@ The way that Taiko Cat works is it loads the latest note in memory and plays it 
 
 However, due to most systems being able to run a basic web app with fairly consistent frame times and the general non-seriousness of this app, I don't see this as a massive issue.
 
-<script src="https://gist.github.com/joshuk/997059f95df1564d3fcec00f85d5ea26.js"></script>
+{% highlight javascript %}
+if(timer > leadIn){
+  if(!audio.playing()){
+    audio.play();
+   }
+
+  if(timer+100 >= latestNote[0]){
+    drawCat();
+
+    ctx.drawImage(leftUpImg, 0, 0);
+    ctx.drawImage(rightUpImg, 0, 0);
+
+    if(latestNote[2] == '2' || latestNote[2] == '4'){
+      ctx.drawImage(browImg, 0, 0);
+    }
+  }
+
+  if(timer >= latestNote[0]){
+    if(timer-latestNote[0] < 200){
+      drawCat();
+      //read the note
+      switch(latestNote[2]){
+        case '1':
+          ctx.drawImage(leftDownImg, 0, 0);
+          ctx.drawImage(rightUpImg, 0, 0);
+
+          redS.play();
+        break;
+        case '2':
+          ctx.drawImage(leftDownHardImg, 0, 0);
+          ctx.drawImage(rightUpImg, 0, 0);
+          ctx.drawImage(browImg, 0, 0);
+
+          redHardS.play();
+        break;
+        case '3':
+          ctx.drawImage(rightDownImg, 0, 0);
+          ctx.drawImage(leftUpImg, 0, 0);
+
+          blueS.play();
+        break;
+        case '4':
+          ctx.drawImage(rightDownHardImg, 0, 0);
+          ctx.drawImage(leftUpImg, 0, 0);
+          ctx.drawImage(browImg, 0, 0);
+
+          blueHardS.play();
+        break;
+      }
+    }
+
+    latestNoteIndex += 1;
+    latestNote = mapItems[latestNoteIndex+1];
+  }
+}
+{% endhighlight %}
 
 This is the meat of the whole app. It runs once the timer passes the lead-in time.
 

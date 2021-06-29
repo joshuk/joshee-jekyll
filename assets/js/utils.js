@@ -1,6 +1,6 @@
 document.querySelector('.colour-scheme-switch').addEventListener('click', () => {
-    let classes = ['light', 'dark'];
-    let value = (1 - document.querySelectorAll('body.dark').length);
+    const classes = ['light', 'dark'];
+    const value = (1 - document.querySelectorAll('body.dark').length);
     document.cookie = 'darkMode=' + value + ';path=/;';
 
     document.querySelector('body').classList.add('transition');

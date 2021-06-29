@@ -50,7 +50,7 @@ h3 span { padding: 0.75rem 0; box-shadow: 0.75rem 0 0 var(--main-colour), -0.75r
 h4 { margin-bottom: 1rem; padding: 0.25rem 0rem; font-size: 1.25rem; }
 
 p,
-li { margin-bottom: 0.875rem; font-size: 1.25rem; line-height: 1.5; }
+li { margin-bottom: 0.875rem; font-size: 1.25rem; line-height: 1.75; }
 p:last-child { margin: 0; }
 
 p a { color: var(--main-colour); font-weight: 500; }
