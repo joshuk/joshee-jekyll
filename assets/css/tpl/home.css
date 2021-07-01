@@ -3,42 +3,19 @@ header.home { position: relative; display: flex; align-items: center; justify-co
 
 .content { text-align: center; padding: 0 1rem; }
 
-.name { align-self: center; margin: 0 auto 2rem; padding: 1rem; background: var(--main-colour); color: #FBFBFB; user-select: none; }
-.name span { display: block; letter-spacing: 1.69rem; padding-left: 1rem; text-transform: lowercase; font-size: 1.25rem; }
-.name h1 { margin: 0; padding: 0; font-weight: 800; font-size: 12rem; line-height: 0.8; color: #FBFBFB; text-transform: uppercase; }
-
-@media screen and (max-width: 600px){
-    .name { display: inline-block; }
-    .name span { position: absolute; margin-bottom: 0.25rem; padding-left: 0.825rem; letter-spacing: 0.8125rem; font-size: 1rem; }
-    .name h1 { margin-top: 1.375rem; font-size: 7rem; }
-}
-
+.name { position: relative; display: inline-block; margin: 0 auto 2rem; padding: 1rem 0 1rem 1.5rem; color: #FBFBFB; user-select: none; overflow: hidden; }
+.name:before { content: ''; position: absolute; top: 115px; left: -125px; width: 105%; height: 255%; background: var(--main-colour); transform-origin: top left; transform: rotate(-45deg); } 
+  
+.name .subtitle { position: relative; display: block; letter-spacing: 1.69rem; margin-bottom: 0.5rem; padding-left: 6px; text-transform: lowercase; font-size: 1.25rem; }
+.name .subtitle span { position: relative; display: inline-block; }
+  
+.name h1 { display: flex; margin: 0; padding: 0; font-weight: 800; font-size: 12rem; line-height: 0.8; color: #FBFBFB; text-transform: uppercase; overflow: hidden; } 
+.name h1 span { position: relative; display: inline-block; padding: 0; background: none; box-shadow: none; line-height: inherit; animation: bottom-in 0.75s; animation-fill-mode: forwards; animation-timing-function: cubic-bezier(0.130, -0.060, 0.000, 1.190); transform: translateY(100%); }
+  
 header p:nth-of-type(1) { margin-bottom: 0.875rem; font-size: 1.75rem; font-weight: 500; letter-spacing: 0.0625rem; }
 header p:nth-of-type(2) { font-size: 1rem; }
 
 .scroll-icon { position: absolute; bottom: 4rem; left: 50%; transform:translateX(-50%) rotate(45deg); padding: 0; width: 2.5rem; height: 2.5rem; background: none; border: none; border-bottom: 3px solid var(--main-colour); border-right: 3px solid var(--main-colour); cursor: pointer; }
-
-@media (prefers-reduced-motion: no-preference) {
-    @keyframes bounce {
-        50% { 
-            transform:translateX(-50%) rotate(45deg);
-        }
-        52% {
-            transform:translateX(-50%) translateY(1rem) rotate(45deg);
-        }
-        54% {
-            transform:translateX(-50%) rotate(45deg);
-        }
-        56% {
-            transform:translateX(-50%) translateY(1rem) rotate(45deg);
-        }
-        58% {  
-            transform:translateX(-50%) rotate(45deg);
-        }
-    }
-
-    .scroll-icon { animation: 10s infinite bounce; animation-timing-function: ease-in-out; }
-}
 
 #work > p:first-of-type,
 #other > p:first-of-type { margin-bottom: 2rem; }
@@ -82,6 +59,82 @@ header p:nth-of-type(2) { font-size: 1rem; }
 .other-item .description p { margin-bottom: 0.5rem; font-size: 0.875rem; }
 .other-item .read-more { color: var(--main-colour); font-size: 0.875rem; font-weight: 600; text-decoration: none; }
 
+/* Animations */
+@media (prefers-reduced-motion: no-preference) {
+    header nav { animation: fade-in 1s; animation-delay: 2s; animation-fill-mode: forwards; opacity: 0; }
+
+    .name:before { animation: expand 1.25s; }
+
+    .name .subtitle span { animation: top-fade-in 0.5s; animation-fill-mode: forwards; opacity: 0; }
+    .name .subtitle span:nth-child(1) { animation-delay: 0.1s; }
+    .name .subtitle span:nth-child(2) { animation-delay: 0.225s; }
+    .name .subtitle span:nth-child(3) { animation-delay: 0.35s; }
+    .name .subtitle span:nth-child(4) { animation-delay: 0.475s; }
+
+    .name h1 span { animation: bottom-in 0.75s; animation-fill-mode: forwards; animation-timing-function: cubic-bezier(0.130, -0.060, 0.000, 1.190); transform: translateY(100%); }
+    .name h1 span:nth-child(1) { animation-delay: 0.6s; }
+    .name h1 span:nth-child(2) { animation-delay: 0.7s; }
+    .name h1 span:nth-child(3) { animation-delay: 0.8s; }
+    .name h1 span:nth-child(4) { animation-delay: 0.9s; }
+
+    header p:nth-of-type(1) { animation: bottom-fade-in 1s; animation-delay: 1.5s; animation-fill-mode: forwards; opacity: 0; }
+    header p:nth-of-type(2) { animation: bottom-fade-in 1.75s; animation-delay: 1.6s; animation-fill-mode: forwards; opacity: 0; }
+
+    .scroll-icon { animation: fade-in 1s, bounce 5s infinite; animation-delay: 2s; animation-fill-mode: forwards; opacity: 0; }
+
+    @keyframes bounce {
+        40% { 
+            transform:translateX(-50%) rotate(45deg);
+        }
+        44% {
+            transform:translateX(-50%) translateY(1rem) rotate(45deg);
+        }
+        48% {
+            transform:translateX(-50%) rotate(45deg);
+        }
+        52% {
+            transform:translateX(-50%) translateY(1rem) rotate(45deg);
+        }
+        56% {  
+            transform:translateX(-50%) rotate(45deg);
+        }
+    }
+
+    @keyframes expand {
+        from { transform: rotate(-45deg) scaleY(0); }
+        to { transform: rotate(-45deg) scaleY(1); }
+    }
+
+    @keyframes fade-in {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes top-fade-in {
+        from { transform: translateY(-100%); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes bottom-fade-in {
+        from { transform: translateY(100%); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes bottom-in {
+        from { transform: translateY(100%); }
+        to { transform: translateY(0); }
+    }
+}
+
+@media screen and (max-width: 600px){
+    .name { padding: 1rem 0.75rem 1rem 1rem; }
+    .name:before { top: 65px; left: -85px; }
+    .name .subtitle { position: absolute; margin-bottom: 0.25rem; padding-left: 0.825rem; letter-spacing: 0.8125rem; font-size: 1rem; }
+    .name h1 { margin-top: 1.375rem; font-size: 7rem; }
+
+    .scroll-icon { bottom: 3rem; }
+}
+
 @media (min-width: 700px) and (max-width: 950px) {  
     .work-item .excerpt { font-size: 0.875rem; }
 
@@ -92,7 +145,7 @@ header p:nth-of-type(2) { font-size: 1rem; }
 @media (max-width: 700px) { 
     header.home { max-height: 100vh; }
 
-    header.home p:nth-of-type(1) { font-size: 1.5rem; }
+    header.home p:nth-of-type(1) { font-size: 1.375rem; }
 
     .work-item { flex-wrap: wrap; }
     .work-item .image { flex-basis: 100%; }
