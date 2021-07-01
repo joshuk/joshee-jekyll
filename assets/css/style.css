@@ -8,11 +8,11 @@ html, body { height: 100%; font-size: 16px; font-family: 'Raleway', 'Arial', san
 :root { --max-page-width: 75rem; }
 
 body.light,
-body.default { --light-colour: #FFFFFF; --light-shadow: #DADADA; --main-colour: #FF47A3; --dark-colour: #1B264F; --dark-shadow: #020510; --github-colour: #333; --codepen-colour: #000; }
-body.dark { --light-colour: #1B264F; --light-shadow: #415392; --main-colour: #FF47A3; --dark-colour: #D4D9E6; --dark-shadow: #B2BFE2; --github-colour: #FFF; --codepen-colour: #FFF; }
+body.default { --light-colour: #FFFFFF; --light-shadow: #DADADA; --main-colour: #FF47A3; --dark-colour: #1B264F; --dark-shadow: #020510; --github-colour: #333; --codepen-colour: #000; --code-scrollbar-background: #DADADA; --code-scrollbar-thumb: #415392; }
+body.dark { --light-colour: #1B264F; --light-shadow: #415392; --main-colour: #FF47A3; --dark-colour: #D4D9E6; --dark-shadow: #B2BFE2; --github-colour: #FFF; --codepen-colour: #FFF; --code-scrollbar-background: #415392; --code-scrollbar-thumb: #DADADA; }
 
 @media (prefers-color-scheme: dark) {
-    body.default { --light-colour: #1B264F; --light-shadow: #415392; --main-colour: #FF47A3; --dark-colour: #D4D9E6; --dark-shadow: #B2BFE2; --github-colour: #333; --codepen-colour: #000; }
+    body.default { --light-colour: #1B264F; --light-shadow: #415392; --main-colour: #FF47A3; --dark-colour: #D4D9E6; --dark-shadow: #B2BFE2; --github-colour: #333; --codepen-colour: #000; --code-scrollbar-background: #415392; --code-scrollbar-thumb: #DADADA; }
 }
 
 /* Header */
