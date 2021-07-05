@@ -3,7 +3,7 @@ layout: post
 type: work
 title: Josh.ee
 date: 04/2020
-description: A run down of how my portfolio website was made, what it's made with
+description: A surprisingly long run down of the process behind making this website, what it's made with
   and how it works.
 image_small: ''
 image_large: ''
@@ -24,7 +24,7 @@ I had a few main things in mind when I thought about how I wanted this site to l
 
 <h4>Minimality</h4>
 
-My main motivation behind making the site minimal was that it was going to be holding text and not much else, so I didn't want to take much focus off of that with fancy layouts or flashy animations.
+My main motivation behind making the site minimal was that it was going to be holding text and not much else, so I didn't want to take much focus off of that with fancy layouts or flashy animations (at least not on the content pages).
 
 Another benefit of minimalism is that it makes it really easy to make tight. I like to think that this site is built pretty well and looks good on most devices and screen sizes, which was made much easier by not having a million moving parts.
 
@@ -150,7 +150,7 @@ I can block the rendering of the page until the correct class is added to the bo
 
 Usually render blocking is [something that you would aim to avoid](https://web.dev/render-blocking-resources/), however in this situation it is exactly what I need.
 
-After this, all that's needed is a little button that the user can click to switch between light and dark mode. The code for this is relatively simple, though there are a couple of little quirks to note:
+After this, all that's needed is a button that the user can click to switch between light and dark mode. The code for this is relatively simple, though there are a couple of small quirks to note:
 
 {% highlight javascript %}
 document.querySelector('.colour-scheme-switch').addEventListener('click', () => {
@@ -167,3 +167,27 @@ document.querySelector('.colour-scheme-switch').addEventListener('click', () => 
     document.querySelector('body').classList.add(classes[value]);
 });
 {% endhighlight %}
+
+Firstly, the way that I determine the darkmode cookies value is more complicated than it looks.
+
+Since the value of the cookie is binary (the site is either in dark mode or it isn't) I can just check whether the &lt;body&gt; tag has the class _dark_. If it does the length of the querySelector will be 1, otherwise it will be 0. I can then subtract that from 0 to get the opposite value. Easy.
+
+I then have to add or remove the _transition_ class on the body due to a little quirk on Firefox. This class just contains one line of CSS:
+
+{% highlight css %}
+body.transition { transition: background 0.5s, color 0.5s; }
+{% endhighlight %}
+
+Which was originally added onto the body by default. However, I guess due to Firefox's rendering engine treating the render blocking Javascript differently, this would cause the page to flash each time it loaded. Adding it to it's own class and then adding/removing said class when needed was an easy fix.
+
+Finally, I just add/remove the applicable classes to change the site's colour theme.
+
+And that's about it.
+
+<h3><span>the future</span></h3>
+
+This site is something that I always plan to keep iterating on as time goes on (so any part of this article may be incorrect/invalid at the time that you're reading it).
+
+However, as of this article being written (July 2021, only over a year since I actually made the site 🤦‍♂️) everything here is near enough correct.
+
+Thanks for reading.
