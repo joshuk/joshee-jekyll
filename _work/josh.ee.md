@@ -67,11 +67,11 @@ Next up I considered trying to use one of those fancy JS libraries like [React](
 
 Though after a bit of research I realised that I'd not only have to set up a back end for these libraries to query, but _then_ actually write an API handler to get the information and display it. This sounded like entirely too much work.
 
-Not only that, but I'd recently developed a strange obsession with making my sites as lightweight as possible. Importing a [20-40kb](https://gist.github.com/Restuta/cda69e50a853aa64912d) JS library (and subsequently forcing people to have JS turned on) for a site that had nearly no interaction or moving parts didn't really make sense for this. Maybe next time.
+Not only that, but I'd recently developed a strange obsession with making my sites as lightweight as possible. Importing a [20-40kb](https://gist.github.com/Restuta/cda69e50a853aa64912d) JS library (and subsequently forcing people to have JS turned on) for a site that had nearly no interaction or moving parts didn't really make sense in this case. Maybe next time.
 
-I finally landed on using a static site generator, since it didn't require me to set up a back end and spat out plain ol' HTML files (which meant I could also host it for free 🤑). I forget how exactly I stumbled on static site generators, most likely through a post/comment on the [webdev subreddit](https://old.reddit.com/r/webdev/).
+I finally landed on using a static site generator, since it didn't require me to set up a back end and spat out plain ol' static HTML files (which meant I could also host it for free 🤑).
 
-I also don't remember why I chose to use [Jekyll](https://jekyllrb.com/) over others, though in retrospect I would probably use something like [Hugo](https://gohugo.io/) or [11ty](https://www.11ty.dev/). Really anything that isn't so _damn slow_.
+I forget how exactly I stumbled on static site generators, most likely through a post/comment on the [webdev subreddit](https://old.reddit.com/r/webdev/). I also don't remember why I chose to use [Jekyll](https://jekyllrb.com/) over others, though in retrospect I would probably use something like [Hugo](https://gohugo.io/) or [11ty](https://www.11ty.dev/) for better build speed.
 
 _(Note to self: maybe don't wait a year before writing about what you made next time)_
 
@@ -85,11 +85,11 @@ A few examples of this would be:
 * Using a media property when importing certain styles to only load animations for users on a device with a mouse cursor and _prefers-reduced-motion_ set to _no-preference_
 * Automatically switching the site to dark mode for users with _prefers-color-scheme_ set to _dark_ (I'll go into this a bit more in a sec)
 
-As well as this, thanks to some handy minification and compression, the initial load of the site's homepage doesn't go too far over 200kb. Meaning that regardless of whichever shack in the outer reaches of Mongolia you may find yourself in, you'll (hopefully) still be able to load the site.
+As well as this, thanks to some handy minification and compression, the initial load of the site's homepage doesn't go too far over 200kb. Meaning that regardless of whatever terrible internet connection you may be using, you should still be able to load the site fine (hopefully) (maybe).
 
-At the time of building this site I had been developing sites for the NHS for a few years. This meant I had plenty of experience with developing for everyone's pal Internet Explorer, since apparently it's the browser of choice for many in that organisation.
+At the time of building this site I had been developing sites for the NHS for a few years. This meant I had plenty of experience with developing for everyone's _best pal_ Internet Explorer, since apparently it's the browser of choice for many in that organisation.
 
-I don't particularly like Internet Explorer, and so decided to employ some wishful thinking and essentially forget it existed when building this site.
+Unfortunately I don't particularly like Internet Explorer, and so decided to employ some wishful thinking and essentially forget it existed when building this site.
 
 The main place that this came in handy was with implementing the aforementioned colour schemes into the site. Due to not having to worry about compatibility, I could use [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) for all of the colours on the site. This made implementing a dark mode a walk in the park.
 
@@ -99,15 +99,15 @@ Speaking of which...
 
 <h3><span>dark mode</span></h3>
 
-Since it's pretty much the only moving part this site it'd probably be worth talking about how this works.
+Since it's pretty much the only moving part of this site it'd probably be worth talking about how this works.
 
 Like I mentioned before, I start by defining a couple of CSS variables which will hold the site's colours. Namely they are:
 
-_--light-colour_, _--light-shadow_, _--main-colour_, _--dark-colour_, _--dark-shadow_ along with a few others for social links.
+_light-colour_, _light-shadow_, _main-colour_, _dark-colour_, _dark-shadow_ along with a few others for social links.
 
-These names were defined with the light scheme in mind, as that was the colour scheme I initially built the site in. This meant that _--light-colour_ would be _#FFFFFF_, _--light-shadow_ would be _#DADADA_ and so on.
+These names were defined with the light scheme in mind, as that was the colour scheme I initially built the site in. This meant that _light-colour_ would be _#FFFFFF_, _light-shadow_ would be _#DADADA_ and so on.
 
-To switch the site to the dark scheme, I can then just swap around all the variables but the main colour. So _--light-colour_ would switch from being the lightest colour, to the darkest etc.
+To switch the site to the dark scheme, I can then just swap around all the variables but the main colour. So _light-colour_ would switch from being the lightest colour to the darkest, _dark-colour_ would become the lightest and so on.
 
 This makes for some kinda funky reading if you look at Inspect Element while in dark mode, however it works well enough that I don't 
 really care.
@@ -146,9 +146,13 @@ if(index !== -1){
 }
 {% endhighlight %}
 
-I can block the rendering of the page until the correct class is added to the body, and therefore the right colour scheme is rendered.
+I can block the rendering of the page until the correct class is added to the body, and therefore the right colour scheme is rendered. Usually render blocking is [something that you would aim to avoid](https://web.dev/render-blocking-resources/), however in this situation it is exactly what I need.
 
-Usually render blocking is [something that you would aim to avoid](https://web.dev/render-blocking-resources/), however in this situation it is exactly what I need.
+For what it's worth, the script above basically checks whether the user's preference is already saved in their cookies. If it is, it removes the default class from the body and applies the correct class for what the user saved. 
+
+Otherwise, it checks whether the computer is automatically set to dark mode, then adds the _dark_ class to the &lt;body&gt; if it is. This isn't to show the correct colour scheme (the CSS will already handle that), but is to make it so that if/when the user presses the switch it will work properly.
+
+<br>
 
 After this, all that's needed is a button that the user can click to switch between light and dark mode. The code for this is relatively simple, though there are a couple of small quirks to note:
 
@@ -168,21 +172,21 @@ document.querySelector('.colour-scheme-switch').addEventListener('click', () => 
 });
 {% endhighlight %}
 
-Firstly, the way that I determine the darkmode cookies value is more complicated than it looks.
+Firstly, the way that I determine the darkmode cookie's value is more complicated than it looks.
 
-Since the value of the cookie is binary (the site is either in dark mode or it isn't) I can just check whether the &lt;body&gt; tag has the class _dark_. If it does the length of the querySelector will be 1, otherwise it will be 0. I can then subtract that from 0 to get the opposite value. Easy.
+Since the value of the cookie is binary (the site is either in dark mode or it isn't) I can just check whether the &lt;body&gt; tag has the class _dark_. If it does the length of the _querySelector_ will be 1, otherwise it will be 0. I can then subtract that value from 1 to get the opposite value. Easy.
 
-I then have to add or remove the _transition_ class on the body due to a little quirk on Firefox. This class just contains one line of CSS:
+I then have to add then remove the _transition_ class on the body to allow for a smooth transition between colour schemes. This class is only one line of CSS:
 
 {% highlight css %}
 body.transition { transition: background 0.5s, color 0.5s; }
 {% endhighlight %}
 
-Which was originally added onto the body by default. However, I guess due to Firefox's rendering engine treating the render blocking Javascript differently, this would cause the page to flash each time it loaded. Adding it to it's own class and then adding/removing said class when needed was an easy fix.
+Which was originally added onto the body by default. However, I guess due to the different rendering engine treating the render blocking Javascript differently, this would cause the page to flash each time it loaded on Firefox.
 
-Finally, I just add/remove the applicable classes to change the site's colour theme.
+Instead, adding these styles to their's own class and then adding/removing said class when needed was an easy fix that worked all around.
 
-And that's about it.
+Finally, I just add/remove the applicable classes to change the site's colour theme and hey presto the colour scheme has been swapped.
 
 <h3><span>the future</span></h3>
 
