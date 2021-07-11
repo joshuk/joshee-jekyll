@@ -5,9 +5,9 @@ title: Josh.ee
 date: 04/2020
 description: A surprisingly long run down of the process behind making this website, what it's made with
   and how it works.
-image_small: ''
-image_large: ''
-published: false
+image_small: /assets/img/post/joshee/joshee_sm.png
+image_large: /assets/img/post/joshee/joshee_lg.png
+published: true
 
 ---
 I created my portfolio website around June 2020 to house both my work as a developer as well as any other little things that I wanted to show off or talk about.
@@ -63,15 +63,19 @@ Originally I was going to build it as a regular PHP site using a CMS like [Wordp
 
 However, not only would this mean I'd have to set up back end hosting which I couldn't be bothered doing, but I kinda wanted to try something new. So I canned that idea.
 
-Next up I considered trying to use one of those fancy JS libraries like [React](https://reactjs.org/) or [Vue](https://vuejs.org/), since I'd never really touched one previously and they were all the rage.
+<br>
+
+Next up I considered trying to use one of those fancy JS libraries like [React](https://reactjs.org/) or [Vue](https://vuejs.org/), since I'd never really touched one before and they were all the rage.
 
 Though after a bit of research I realised that I'd not only have to set up a back end for these libraries to query, but _then_ actually write an API handler to get the information and display it. This sounded like entirely too much work.
 
-Not only that, but I'd recently developed a strange obsession with making my sites as lightweight as possible. Importing a [20-40kb](https://gist.github.com/Restuta/cda69e50a853aa64912d) JS library (and subsequently forcing people to have JS turned on) for a site that had nearly no interaction or moving parts didn't really make sense in this case. Maybe next time.
+Not only that, but importing a JS library (and subsequently forcing uses to have JS on) for a site that had nearly no interaction or moving parts doesn't really make much sense in my eyes. Maybe next time.
+
+<br>
 
 I finally landed on using a static site generator, since it didn't require me to set up a back end and spat out plain ol' static HTML files (which meant I could also host it for free 🤑).
 
-I forget how exactly I stumbled on static site generators, most likely through a post/comment on the [webdev subreddit](https://old.reddit.com/r/webdev/). I also don't remember why I chose to use [Jekyll](https://jekyllrb.com/) over others, though in retrospect I would probably use something like [Hugo](https://gohugo.io/) or [11ty](https://www.11ty.dev/) for better build speed.
+I forget how exactly I stumbled on static site generators, most likely through a post/comment on the [webdev subreddit](https://old.reddit.com/r/webdev/). I also don't remember why I chose to use [Jekyll](https://jekyllrb.com/) over others, though in retrospect I would probably use something like [Hugo](https://gohugo.io/) or [11ty](https://www.11ty.dev/) just for faster builds.
 
 _(Note to self: maybe don't wait a year before writing about what you made next time)_
 
@@ -86,6 +90,8 @@ A few examples of this would be:
 * Automatically switching the site to dark mode for users with _prefers-color-scheme_ set to _dark_ (I'll go into this a bit more in a sec)
 
 As well as this, thanks to some handy minification and compression, the initial load of the site's homepage doesn't go too far over 200kb. Meaning that regardless of whatever terrible internet connection you may be using, you should still be able to load the site fine (hopefully) (maybe).
+
+<br>
 
 At the time of building this site I had been developing sites for the NHS for a few years. This meant I had plenty of experience with developing for everyone's _best pal_ Internet Explorer, since apparently it's the browser of choice for many in that organisation.
 
@@ -148,9 +154,11 @@ if(index !== -1){
 
 I can block the rendering of the page until the correct class is added to the body, and therefore the right colour scheme is rendered. Usually render blocking is [something that you would aim to avoid](https://web.dev/render-blocking-resources/), however in this situation it is exactly what I need.
 
+<br>
+
 For what it's worth, the script above basically checks whether the user's preference is already saved in their cookies. If it is, it removes the default class from the body and applies the correct class for what the user saved. 
 
-Otherwise, it checks whether the computer is automatically set to dark mode, then adds the _dark_ class to the &lt;body&gt; if it is. This isn't to show the correct colour scheme (the CSS will already handle that), but is to make it so that if/when the user presses the switch it will work properly.
+Otherwise, it checks whether the user's device is already set to dark mode, then adds the _dark_ class to the &lt;body&gt; if it is. This isn't to show the correct colour scheme (the CSS will already handle that), but is to make it so that if/when the user presses the switch it will work properly.
 
 <br>
 
@@ -172,11 +180,13 @@ document.querySelector('.colour-scheme-switch').addEventListener('click', () => 
 });
 {% endhighlight %}
 
-Firstly, the way that I determine the darkmode cookie's value is more complicated than it looks.
+Firstly, the way that I determine the _darkMode_ cookie's value is more complicated than it looks.
 
-Since the value of the cookie is binary (the site is either in dark mode or it isn't) I can just check whether the &lt;body&gt; tag has the class _dark_. If it does the length of the _querySelector_ will be 1, otherwise it will be 0. I can then subtract that value from 1 to get the opposite value. Easy.
+Since the value of the cookie is binary (the site is either in dark mode or it isn't) I can just check whether the &lt;body&gt; tag has the class _dark_. If it does the length of the _querySelector_ will be 1, otherwise it will be 0. I can then subtract that value from 1 to get the opposite value.
 
-I then have to add then remove the _transition_ class on the body to allow for a smooth transition between colour schemes. This class is only one line of CSS:
+<br>
+
+I then have to add then remove the _transition_ class on the body to allow for a smooth transition between colour schemes. This class only contains one CSS definition:
 
 {% highlight css %}
 body.transition { transition: background 0.5s, color 0.5s; }
@@ -184,7 +194,9 @@ body.transition { transition: background 0.5s, color 0.5s; }
 
 Which was originally added onto the body by default. However, I guess due to the different rendering engine treating the render blocking Javascript differently, this would cause the page to flash each time it loaded on Firefox.
 
-Instead, adding these styles to their's own class and then adding/removing said class when needed was an easy fix that worked all around.
+Instead, adding this style to it's own class and then adding/removing said class when needed was an easy fix that worked all around.
+
+<br>
 
 Finally, I just add/remove the applicable classes to change the site's colour theme and hey presto the colour scheme has been swapped.
 
