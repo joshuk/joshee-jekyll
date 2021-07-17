@@ -50,12 +50,14 @@ article code::-webkit-scrollbar { max-width: 6px; max-height: 6px; background: v
 article code::-webkit-scrollbar-thumb { background: var(--code-scrollbar-thumb); }
 article code::-webkit-scrollbar-corner { background: var(--light-colour); }
 
+@media (max-width: 700px) {
+    article code { margin-top: 1rem; font-size: 0.75rem; max-height: 35rem; }
+}
+
 @media (max-width: 700px) and (min-width: 501px) { 
     p.category { margin-bottom: 1rem; }
 
     article { margin-top: 3rem; }
-
-    article code { margin-top: 1rem; font-size: 0.75rem; max-height: 35rem; }
 }
 
 @media (max-width: 500px){
