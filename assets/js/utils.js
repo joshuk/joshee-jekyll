@@ -8,6 +8,7 @@ document.querySelector('.colour-scheme-switch').addEventListener('click', () => 
         document.querySelector('body').classList.remove('transition');
     }, 500);
 
+    document.querySelector('body').classList.remove('default');
     document.querySelector('body').classList.remove(classes[1 - value]);
     document.querySelector('body').classList.add(classes[value]);
 });
