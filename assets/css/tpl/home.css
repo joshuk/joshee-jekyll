@@ -10,7 +10,7 @@ header.home { position: relative; display: flex; align-items: center; justify-co
 .name .subtitle span { position: relative; display: inline-block; }
   
 .name h1 { display: flex; margin: 0; padding: 0; font-weight: 800; font-size: 12rem; line-height: 0.8; color: #FBFBFB; text-transform: uppercase; overflow: hidden; } 
-.name h1 span { position: relative; display: inline-block; padding: 0; background: none; box-shadow: none; line-height: inherit; animation: bottom-in 0.75s; animation-fill-mode: forwards; animation-timing-function: cubic-bezier(0.130, -0.060, 0.000, 1.190); transform: translateY(100%); }
+.name h1 span { position: relative; display: inline-block; padding: 0; background: none; box-shadow: none; line-height: inherit; animation: bottom-in 0.75s; animation-fill-mode: forwards; animation-timing-function: cubic-bezier(0.130, -0.060, 0.000, 1.190); }
   
 header p:nth-of-type(1) { margin-bottom: 0.875rem; font-size: 1.75rem; font-weight: 500; letter-spacing: 0.0625rem; }
 header p:nth-of-type(2) { font-size: 1rem; }
